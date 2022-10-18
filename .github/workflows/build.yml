@@ -8,6 +8,10 @@ on:
 
 env:
   DOTNET_VERSION: '6.0.x'
+  SBOM_PN: 'SbomDemoApplication'
+  SBOM_PV: '1.0.0'
+  SBOM_PS: 'David Ullrich Software'
+  SBOM_NSB: 'https://ullrich-software.at/github'
 
 jobs:
   build:
@@ -28,5 +32,10 @@ jobs:
       - name: Build
         run: |
           cd ./WebApplication1
-          dotnet build -c Release --no-restore
+          dotnet build -c Release -o ../bin --no-restore
           dotnet publish -c Release -o ../dotnet-webapp -r linux-x64 --self-contained true /p:UseAppHost=true
+
+      - name: Generate SBOM
+        run: |
+          mkdir ./sbom
+          dotnet sbom-tool generate -b ./dotnet-webapp -bc ./ -pn ${{ env.SBOM_PV }} -pv ${{ env.SBOM_PV }} -ps ${{ env.SBOM_PS }} -nsb ${{ env.SBOM_NSB }} -m ./sbom

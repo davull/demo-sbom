@@ -5,6 +5,7 @@
 
 # Publish output
 dotnet-webapp/
+sbom/
 
 # User-specific files
 *.rsuser
