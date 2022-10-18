@@ -27,6 +27,6 @@ jobs:
       
       - name: Build
         run: |
-          cd .\WebApplication1
+          cd ./WebApplication1
           dotnet build -c Release --no-restore
           dotnet publish -c Release -o ../dotnet-webapp -r linux-x64 --self-contained true /p:UseAppHost=true
